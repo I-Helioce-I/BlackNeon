@@ -19,12 +19,6 @@ public class ActionController : MonoBehaviour
     [SerializeField] int divideCharges;
     [SerializeField] bool divideSelected;
 
-
-    [Header("Charge"), SerializeField]
-    public bool chargeToGive;
-    [SerializeField] public int actualCharge;
-
-
     PlayerController pc;
 
 
@@ -35,29 +29,92 @@ public class ActionController : MonoBehaviour
 
     void Update()
     {
+        ChargeSelector();
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) && addCharges > 0 && actualCharge <= 0)
+        if (addSelected || substractSelected || multiplySelected || divideSelected)
+        {
+            DoRaycast();
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                ShootRaycast();
+            }
+        }
+    }
+
+    private void DoRaycast()
+    {
+
+        if (addSelected)
+        {
+            actions[0].SelectOutline(pc);
+        }
+        else if (substractSelected)
+        {
+            actions[1].SelectOutline(pc);
+        }
+        else if (multiplySelected)
+        {
+            actions[2].SelectOutline(pc);
+        }
+        else if (divideSelected)
+        {
+            actions[3].SelectOutline(pc);
+        }
+    }
+
+    private void ShootRaycast()
+    {
+        if (addSelected)
+        {
+            actions[0].UseAction(pc);
+            addCharges--;
+            addSelected = false;
+        }
+        else if (substractSelected)
+        {
+            actions[1].UseAction(pc);
+            substractCharges--;
+            substractSelected = false;
+        }
+        else if (multiplySelected)
+        {
+            actions[2].UseAction(pc);
+            multiplyCharges--;
+            multiplySelected = false;
+        }
+        else if (divideSelected)
+        {
+            actions[3].UseAction(pc);
+            divideCharges--;
+            divideSelected = false;
+        }
+    }
+
+    private void ChargeSelector()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && addCharges > 0)
         {
             addSelected = true;
             substractSelected = false;
             multiplySelected = false;
             divideSelected = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && multiplyCharges > 0 && actualCharge <= 0)
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && substractCharges > 0)
         {
             addSelected = false;
             substractSelected = true;
             multiplySelected = false;
             divideSelected = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && multiplyCharges > 0 && actualCharge <= 0)
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && multiplyCharges > 0)
         {
             addSelected = false;
             substractSelected = false;
             multiplySelected = true;
             divideSelected = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4) && divideCharges > 0 && actualCharge <= 0)
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && divideCharges > 0)
         {
             addSelected = false;
             substractSelected = false;
@@ -65,104 +122,35 @@ public class ActionController : MonoBehaviour
             divideSelected = true;
         }
 
-        if (actualCharge > 0)
-        {
-            UIManager.Instance.DisplayChargeShortcut(true);
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                addCharges++;
-                CleanToGivePoint();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                substractCharges++;
-                CleanToGivePoint();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                multiplyCharges++;
-                CleanToGivePoint();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                divideCharges++;
-                CleanToGivePoint();
-            }
-        }
-        else
-        {
-            UIManager.Instance.DisplayChargeShortcut(false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            if (addSelected)
-            {
-                actions[0].UseAction(pc);
-                addCharges--;
-            }
-            else if (substractSelected)
-            {
-                actions[1].UseAction(pc);
-                substractCharges--;
-            }
-            else if (multiplySelected)
-            {
-                actions[2].UseAction(pc);
-                multiplyCharges--;
-            }
-            else if (divideSelected)
-            {
-                actions[3].UseAction(pc);
-                divideCharges--;
-            }
-
-            ResetSelection();
-        }
-
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            ResetSelection();
+            addSelected = false;
+            substractSelected = false;
+            multiplySelected = false;
+            divideSelected = false;
         }
 
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    actions[0].UseAction(pc);
-        //    Debug.Log("Add");
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    actions[1].UseAction(pc);
-        //    Debug.Log("Substract");
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Alpha3))
-        //{
-        //    actions[2].UseAction(pc);
-        //    Debug.Log("Multiply");
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Alpha4))
-        //{
-        //    actions[3].UseAction(pc);
-        //    Debug.Log("Divide");
-        //}
     }
 
-    public void ResetSelection()
+    public void AddCharge(chargeType chargeType)
     {
-        addSelected = false;
-        substractSelected = false;
-        multiplySelected = false;
-        divideSelected = false;
-    }
+        if (chargeType == chargeType.Add)
+        {
+            addCharges++;
+        }
+        else if (chargeType == chargeType.Substract)
+        {
+            substractCharges++;
+        }
+        else if (chargeType == chargeType.Multiply)
+        {
+            multiplyCharges++;
+        }
+        else if (chargeType == chargeType.Divide)
+        {
+            divideCharges++;
+        }
 
-    private void CleanToGivePoint()
-    {
-        actualCharge--;
-        UIManager.Instance.UpdateChargeText(actualCharge);
     }
-
 
 }
