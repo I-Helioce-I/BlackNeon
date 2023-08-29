@@ -17,7 +17,7 @@ public class ChargeActionSubstract : ChargeAction
     public override void UseAction(PlayerController pc)
     {
         RaycastHit hit;
-        if (Physics.Raycast(pc.GetRaycastorigin().position, pc.GetOrientation().transform.forward, out hit, Mathf.Infinity))
+        if (Physics.Raycast(pc.GetRaycastorigin().position, pc.GetOrientation().transform.forward, out hit, 25, layerMask))
         {
             Destroy(hit.collider.gameObject);
         }

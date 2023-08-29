@@ -16,10 +16,15 @@ public class ChargeActionAdd : ChargeAction
     public override void UseAction(PlayerController pc)
     {
         RaycastHit hit;
-        if (Physics.Raycast(pc.GetRaycastorigin().position, pc.GetOrientation().transform.forward, out hit, Mathf.Infinity))
+        if (Physics.Raycast(pc.GetRaycastorigin().position, pc.GetOrientation().transform.forward, out hit, 25, layerMask))
         {
 
             GameObject instance = Instantiate(hit.collider.gameObject, hit.transform.position + (Vector3.Scale(hit.normal, hit.collider.transform.localScale)), hit.transform.localRotation);
+
+            hit.collider.GetComponent<SwapMaterial>().swapColor = false;
+            instance.GetComponent<SwapMaterial>().swapColor = false;
+            
+
         }
         else
         {

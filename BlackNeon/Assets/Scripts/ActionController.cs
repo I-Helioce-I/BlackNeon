@@ -34,6 +34,11 @@ public class ActionController : MonoBehaviour
         if (addSelected || substractSelected || multiplySelected || divideSelected)
         {
             DoRaycast();
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                ShootRaycast();
+            }
         }
     }
 
@@ -58,6 +63,34 @@ public class ActionController : MonoBehaviour
         }
     }
 
+    private void ShootRaycast()
+    {
+        if (addSelected)
+        {
+            actions[0].UseAction(pc);
+            addCharges--;
+            addSelected = false;
+        }
+        else if (substractSelected)
+        {
+            actions[1].UseAction(pc);
+            substractCharges--;
+            substractSelected = false;
+        }
+        else if (multiplySelected)
+        {
+            actions[2].UseAction(pc);
+            multiplyCharges--;
+            multiplySelected = false;
+        }
+        else if (divideSelected)
+        {
+            actions[3].UseAction(pc);
+            divideCharges--;
+            divideSelected = false;
+        }
+    }
+
     private void ChargeSelector()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && addCharges > 0)
@@ -74,14 +107,14 @@ public class ActionController : MonoBehaviour
             multiplySelected = false;
             divideSelected = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && substractCharges > 0)
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && multiplyCharges > 0)
         {
             addSelected = false;
             substractSelected = false;
             multiplySelected = true;
             divideSelected = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && substractCharges > 0)
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && divideCharges > 0)
         {
             addSelected = false;
             substractSelected = false;
