@@ -105,7 +105,6 @@ public class PlayFabManager : MonoBehaviour
 
             float timeBeforeConvertion = item.StatValue;
             float timeAferConvertion = timeBeforeConvertion / 1000000;
-            Debug.Log(timeAferConvertion);
             UIManager.Instance.SetLeaderBoard((item.Position +1).ToString(), item.DisplayName, timeAferConvertion.ToString());
             
         }

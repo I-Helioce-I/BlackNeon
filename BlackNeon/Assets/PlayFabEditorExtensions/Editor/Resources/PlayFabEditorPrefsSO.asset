@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DevAccountEmail: heliocegd@gmail.com
   DevAccountToken: ewazhfg1ci8h3ntfpeyrsrnagkupbcsby31epgkjrg5qqdwqa31tcmjq5kdsptarwc91fgeai4i9eqznpu1yk3nqrqidquf1op51t5mqx3smmsgqb1sp1oay11hzfk1ogk8p1sc6ypxzcrnk5xur813fg7kmzo6edgctres1wcf85px8sx5mnqynfpe6u3imf4hgp1d4
-  SelectedStudio: 
+  SelectedStudio: My Game Studio
   SdkPath: Assets/PlayFabSDK
   EdExPath: 
   LocalCloudScriptPath: 
