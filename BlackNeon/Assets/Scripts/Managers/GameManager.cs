@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         UIManager.Instance.ShowEndPanel();
+        
         PlayFabManager.Instance.SendLeaderboard("Level_" + levelName, timer.GetCurrentScore());
     }
 

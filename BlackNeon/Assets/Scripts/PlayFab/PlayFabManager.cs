@@ -24,6 +24,10 @@ public class PlayFabManager : MonoBehaviour
 
     private void Start()
     {
+        //if (string.IsNullOrEmpty(PlayFabSettings.TitleId))
+        //{
+        //    PlayFabSettings.TitleId = "42206";
+        //}
         if (Instance == null)
         {
             Instance = this;
@@ -47,10 +51,12 @@ public class PlayFabManager : MonoBehaviour
 
     public void SendLeaderboard(string levelName, int score)
     {
-        if(previousScore <= score)
-        {
-            return;
-        }
+        Debug.Log("Called on Send LEaderboard");
+
+        //if (previousScore <= score)
+        //{
+        //    return;
+        //}
 
         var request = new UpdatePlayerStatisticsRequest
         {

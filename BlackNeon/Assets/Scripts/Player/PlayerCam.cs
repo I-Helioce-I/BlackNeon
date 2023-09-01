@@ -14,17 +14,18 @@ public class PlayerCam : MonoBehaviour
 
     private void Start()
     {
+        // Lock mouse and visibility
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     private void Update()
     {
+        //Get mouse 
         float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensY;
 
         yRotation += mouseX;
-
         xRotation -= mouseY;
 
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
