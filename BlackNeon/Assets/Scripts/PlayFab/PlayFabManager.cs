@@ -24,10 +24,7 @@ public class PlayFabManager : MonoBehaviour
 
     private void Start()
     {
-        //if (string.IsNullOrEmpty(PlayFabSettings.TitleId))
-        //{
-        //    PlayFabSettings.TitleId = "42206";
-        //}
+        
         if (Instance == null)
         {
             Instance = this;
