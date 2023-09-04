@@ -53,7 +53,7 @@ public class PlayFabManager : MonoBehaviour
     {
         Debug.Log("Called on Send LEaderboard");
 
-        //if (previousScore <= score)
+        //if (previousScore <= score || previo)
         //{
         //    return;
         //}
