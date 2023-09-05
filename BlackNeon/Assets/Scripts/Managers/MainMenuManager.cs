@@ -11,7 +11,7 @@ public class MainMenuManager : MonoBehaviour
     Object[] scenes;
 
     [SerializeField]
-    GameObject buttonPrefab;
+    GameObject buttonPrefab;    
 
     private void Start()
     {
@@ -25,6 +25,8 @@ public class MainMenuManager : MonoBehaviour
             GameObject levelButton = Instantiate(buttonPrefab);
         }
     }
+
+    //
 
     public void QuitApplication()
     {
