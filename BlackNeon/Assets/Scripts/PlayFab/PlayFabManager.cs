@@ -3,127 +3,138 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
-using System;
 using TMPro;
 using UnityEngine.UI;
 
 public class PlayFabManager : MonoBehaviour
 {
-    public static PlayFabManager Instance;
+	public static PlayFabManager Instance;
 
-    [SerializeField]
-    string playFabID;
+	[SerializeField]
+	string playFabID;
 
-    [SerializeField]
-    public string displayName;
+	[SerializeField]
+	public string displayName;
 
-    PlayerProfileModel playerProfile;
+	PlayerProfileModel playerProfile;
 
-    [SerializeField]
-    float previousScore;
+	[SerializeField]
+	float previousScore;
 
-    private void Start()
-    {
-        
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
+	private void Start()
+	{
 
-        DontDestroyOnLoad(this.gameObject);
+		if (Instance == null)
+		{
+			Instance = this;
+		}
+		else
+		{
+			Destroy(this);
+		}
 
-        previousScore = 0;
-    }
+		DontDestroyOnLoad(this.gameObject);
 
-    public void SetPlayFabIDName(string playfabID)
-    {
-        playFabID = playfabID;
+		previousScore = 0;
+	}
 
-        GetPlayerProfile(playfabID);
-    }
+	public void SetPlayFabIDName(string playfabID)
+	{
+		playFabID = playfabID;
 
-    public void SendLeaderboard(string levelName, int score)
-    {
+		GetPlayerProfile(playfabID);
+	}
 
-        //if (previousScore <= score || previo)
-        //{
-        //    return;
-        //}
+	public void SendLeaderboard(string levelName, int score)
+	{
 
-        var request = new UpdatePlayerStatisticsRequest
-        {
-            Statistics = new List<StatisticUpdate>
-            {
-                new StatisticUpdate
-                {
-                    StatisticName = levelName,
-                    Value = score
-                }
-            }
-        };
-        PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, OnError);
+		//if (previousScore <= score || previo)
+		//{
+		//    return;
+		//}
 
-    }
+		var request = new UpdatePlayerStatisticsRequest
+		{
+			Statistics = new List<StatisticUpdate>
+			{
+				new StatisticUpdate
+				{
+					StatisticName = levelName,
+					Value = score
+				}
+			}
+		};
+		PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, OnError);
 
-    private void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
-    {
-        Debug.Log("Success leaderboard send to " + result.Request);
-    }
+	}
 
-    public void GetLeaderboard(string levelName)
-    {
-        var request = new GetLeaderboardRequest
-        {
-            StatisticName = levelName,
+	private void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
+	{
+		Debug.Log("Success leaderboard send to " + result.Request);
+	}
 
-        };
-        PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
+	public void GetLeaderboard(string levelName)
+	{
+		var request = new GetLeaderboardRequest
+		{
+			StatisticName = levelName,
 
-    }
+		};
+		PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
 
-    void OnLeaderboardGet(GetLeaderboardResult result)
-    {
-        foreach(Transform item in UIManager.Instance.rowsParent)
-        {
-            Destroy(item.gameObject);
-        }
+	}
 
-        foreach(var item in result.Leaderboard)
-        {
-            if(item.PlayFabId == playFabID)
-            {
-                previousScore = item.StatValue;
-            }
+	void OnLeaderboardGet(GetLeaderboardResult result)
+	{
+		foreach (Transform item in UIManager.Instance.rowsParent)
+		{
+			Destroy(item.gameObject);
+		}
 
-            float timeBeforeConvertion = item.StatValue;
-            float timeAferConvertion = timeBeforeConvertion / 1000000;
-            UIManager.Instance.SetLeaderBoard((item.Position +1).ToString(), item.DisplayName, timeAferConvertion.ToString());
-            
-        }
-    }
+		List<LeaderboardEntry> leaderboardEntry = new List<LeaderboardEntry>();
 
-    void OnError(PlayFabError error)
-    {
-        Debug.Log(error);
-    }
+		foreach (var item in result.Leaderboard)
+		{
+			leaderboardEntry.Add(new LeaderboardEntry(item.DisplayName, item.StatValue, item.PlayFabId));
+		}
 
-    void GetPlayerProfile(string playFabId)
-    {
-        PlayFabClientAPI.GetPlayerProfile(new GetPlayerProfileRequest()
-        {
-            PlayFabId = playFabId,
-            ProfileConstraints = new PlayerProfileViewConstraints()
-            {
-                ShowDisplayName = true
-            }
-        },
-        result => playerProfile = result.PlayerProfile,
-        error => Debug.LogError(error.GenerateErrorReport()));
+		leaderboardEntry.Sort();
 
-    }
+		leaderboardEntry.DebugLeaderboard();
+
+		for (int i = 0; i < leaderboardEntry.Count; i++)
+		{
+			LeaderboardEntry entry = leaderboardEntry[i];
+			if (entry.PlayFabId == playFabID)
+			{
+				previousScore = entry.statValue;
+			}
+
+			float timeBeforeConvertion = entry.statValue;
+			float timeAferConvertion = timeBeforeConvertion / 1000000;
+			UIManager.Instance.SetLeaderBoard((i + 1).ToString(), entry.username, timeAferConvertion.ToString());
+
+		}
+	}
+
+	void OnError(PlayFabError error)
+	{
+		Debug.Log(error);
+	}
+
+	void GetPlayerProfile(string playFabId)
+	{
+		PlayFabClientAPI.GetPlayerProfile(new GetPlayerProfileRequest()
+		{
+			PlayFabId = playFabId,
+			ProfileConstraints = new PlayerProfileViewConstraints()
+			{
+				ShowDisplayName = true
+			}
+		},
+		result => playerProfile = result.PlayerProfile,
+		error => Debug.LogError(error.GenerateErrorReport()));
+
+	}
 
 }
