@@ -21,9 +21,14 @@ public class ChargeActionAdd : ChargeAction
 
             GameObject instance = Instantiate(hit.collider.gameObject, hit.transform.position + (Vector3.Scale(hit.normal, hit.collider.transform.localScale)), hit.transform.localRotation);
 
-            hit.collider.GetComponent<SwapMaterial>().swapColor = false;
-            instance.GetComponent<SwapMaterial>().swapColor = false;
-            
+            SwapMaterial original = hit.collider.GetComponent<SwapMaterial>();
+            SwapMaterial instanceSM = instance.GetComponent<SwapMaterial>();
+
+            original.swapColor = false;
+            instanceSM.swapColor = false;
+            instanceSM.ResetMaterial();
+
+            GetComponent<RendererController>().DisableEffect();
 
         }
         else

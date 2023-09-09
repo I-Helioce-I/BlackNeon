@@ -7,13 +7,15 @@ public class SwapMaterial : MonoBehaviour
     [SerializeField]
     public Material materialToApply;
     [SerializeField]
-    Material defaultMat;
+    public Material defaultMat;
 
     public bool swapColor;
 
+    public MeshRenderer meshRenderer;
+
     void Start()
     {
-        defaultMat = GetComponent<MeshRenderer>().material;
+        //defaultMat = GetComponent<MeshRenderer>().material;
         
     }
 
@@ -37,6 +39,11 @@ public class SwapMaterial : MonoBehaviour
     public void OnRaycastUnHit()
     {
         GetComponent<MeshRenderer>().material = defaultMat;
+    }
+
+    public void ResetMaterial()
+    {
+        meshRenderer.material = defaultMat;
     }
 
 }

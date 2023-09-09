@@ -20,6 +20,8 @@ public class ChargeActionSubstract : ChargeAction
         if (Physics.Raycast(pc.GetRaycastorigin().position, pc.GetOrientation().transform.forward, out hit, 25, layerMask))
         {
             Destroy(hit.collider.gameObject);
+
+            GetComponent<RendererController>().DisableEffect();
         }
         else
         {

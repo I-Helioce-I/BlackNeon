@@ -20,6 +20,10 @@ public class ChargeActionMultiply : ChargeAction
         if (Physics.Raycast(pc.GetRaycastorigin().position, pc.GetOrientation().transform.forward, out hit, 25, layerMask))
         {
             hit.collider.gameObject.transform.localScale = new Vector3(hit.collider.gameObject.transform.localScale.x * 2, hit.collider.gameObject.transform.localScale.y * 2, hit.collider.gameObject.transform.localScale.z * 2);
+
+            hit.collider.GetComponent<SwapMaterial>().swapColor = false;
+
+            GetComponent<RendererController>().DisableEffect();
         }
         else
         {

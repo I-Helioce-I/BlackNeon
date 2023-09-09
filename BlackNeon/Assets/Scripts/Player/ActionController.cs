@@ -1,6 +1,8 @@
+using Cyan;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class ActionController : MonoBehaviour
 {
@@ -20,6 +22,11 @@ public class ActionController : MonoBehaviour
     [SerializeField] bool divideSelected;
 
     PlayerController pc;
+
+    [SerializeField]
+    RendererController rendererController;
+
+    
 
 
     private void Start()
@@ -99,6 +106,9 @@ public class ActionController : MonoBehaviour
             substractSelected = false;
             multiplySelected = false;
             divideSelected = false;
+
+            rendererController.SetUpMaterial(0);
+
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && substractCharges > 0)
         {
@@ -106,6 +116,8 @@ public class ActionController : MonoBehaviour
             substractSelected = true;
             multiplySelected = false;
             divideSelected = false;
+
+            rendererController.SetUpMaterial(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && multiplyCharges > 0)
         {
@@ -113,6 +125,8 @@ public class ActionController : MonoBehaviour
             substractSelected = false;
             multiplySelected = true;
             divideSelected = false;
+
+            rendererController.SetUpMaterial(2);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4) && divideCharges > 0)
         {
@@ -120,6 +134,8 @@ public class ActionController : MonoBehaviour
             substractSelected = false;
             multiplySelected = false;
             divideSelected = true;
+
+            rendererController.SetUpMaterial(3);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -128,6 +144,8 @@ public class ActionController : MonoBehaviour
             substractSelected = false;
             multiplySelected = false;
             divideSelected = false;
+
+            rendererController.DisableEffect();
         }
 
     }
