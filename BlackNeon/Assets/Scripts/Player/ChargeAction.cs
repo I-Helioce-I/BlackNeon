@@ -5,9 +5,7 @@ using UnityEngine;
 public abstract class ChargeAction : MonoBehaviour
 {
     public abstract void UseAction(PlayerController pc);
-
-
-
+    
     public abstract void SelectOutline(PlayerController pc);
 
 }
