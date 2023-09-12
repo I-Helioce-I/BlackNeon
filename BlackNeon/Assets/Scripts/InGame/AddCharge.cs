@@ -35,8 +35,6 @@ public class AddCharge : MonoBehaviour
             default:
                 break;
         }
-
-
     }
 
     private void OnTriggerEnter(Collider other)
