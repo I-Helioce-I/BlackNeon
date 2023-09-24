@@ -1,7 +1,9 @@
 using Cyan;
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
 public class ActionController : MonoBehaviour
@@ -22,6 +24,7 @@ public class ActionController : MonoBehaviour
     [SerializeField] bool divideSelected;
 
     PlayerController pc;
+    StarterAssetsInputs inputs;
 
     [SerializeField]
     RendererController rendererController;
@@ -32,6 +35,8 @@ public class ActionController : MonoBehaviour
     private void Start()
     {
         pc = GetComponent<PlayerController>();
+        inputs = GetComponent<StarterAssetsInputs>();
+        rendererController = GetComponent<RendererController>();
     }
 
     void Update()
@@ -52,19 +57,19 @@ public class ActionController : MonoBehaviour
     private void DoRaycast()
     {
 
-        if (addSelected)
+        if (inputs.addAction)
         {
             actions[0].SelectOutline(pc);
         }
-        else if (substractSelected)
+        else if (inputs.substractAction)
         {
             actions[1].SelectOutline(pc);
         }
-        else if (multiplySelected)
+        else if (inputs.multiplyAction)
         {
             actions[2].SelectOutline(pc);
         }
-        else if (divideSelected)
+        else if (inputs.divideAction)
         {
             actions[3].SelectOutline(pc);
         }

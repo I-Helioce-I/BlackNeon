@@ -40,6 +40,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     public Transform rowsParent;
 
+    public Slider slider;
+
 
     // Public property to access the Singleton instance
     public static UIManager Instance
@@ -98,6 +100,11 @@ public class UIManager : MonoBehaviour
         GameObject newGo = Instantiate(rowPrefab, rowsParent);
         RowManager newGORowManager = newGo.GetComponent<RowManager>();
         newGORowManager.SetRow(position, username, statValue);
+    }
+
+    public void UpdateSlider(float value)
+    {
+        slider.value = value;
     }
 
     //public void UdateCharges(ActionController aC)

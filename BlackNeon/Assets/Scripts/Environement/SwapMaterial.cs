@@ -15,7 +15,8 @@ public class SwapMaterial : MonoBehaviour
 
     void Start()
     {
-        //defaultMat = GetComponent<MeshRenderer>().material;
+        meshRenderer = GetComponent<MeshRenderer>();
+        defaultMat = GetComponent<MeshRenderer>().material;
         
     }
 
