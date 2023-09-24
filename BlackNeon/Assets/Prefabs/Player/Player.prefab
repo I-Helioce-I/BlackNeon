@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 5942342765671875904}
   - component: {fileID: 5942342765671875907}
   - component: {fileID: 5942342765671875906}
+  - component: {fileID: 693515905}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -290,14 +291,15 @@ MonoBehaviour:
   - {fileID: 5942342765671875904}
   - {fileID: 5942342765671875907}
   - {fileID: 5942342765671875906}
-  addCharges: 0
+  addCharges: 99
   addSelected: 0
-  substractCharges: 0
+  substractCharges: 99
   substractSelected: 0
-  multiplyCharges: 0
+  multiplyCharges: 99
   multiplySelected: 0
-  divideCharges: 0
+  divideCharges: 99
   divideSelected: 0
+  rendererController: {fileID: 693515905}
 --- !u!114 &5942342765671875905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,3 +364,21 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1048576
+--- !u!114 &693515905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5942342765671875931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff139879455e50b4fa2b5186699ab066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rendererData: {fileID: 11400000, guid: c40be3174f62c4acf8c1216858c64956, type: 2}
+  materials:
+  - {fileID: 2100000, guid: 3713670c7a9dd6a468d650041564b51f, type: 2}
+  - {fileID: 2100000, guid: 98731c0184e8c3346a04f46c8894f3c2, type: 2}
+  - {fileID: 2100000, guid: a258b40f43eb4bb47a6323d87e79b39e, type: 2}
+  - {fileID: 2100000, guid: 553841bd8c5e7904f8d11b9ebcdbbbdf, type: 2}
